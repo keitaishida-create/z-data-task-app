@@ -4,6 +4,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   base: '/z-data-task-app/',
+  build: {
+    outDir: 'docs',
+  },
   plugins: [
     react(),
     VitePWA({

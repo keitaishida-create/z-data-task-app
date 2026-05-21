@@ -21,12 +21,12 @@ npm run dev
 ```bash
 # .env.production に本番 GAS URL を設定済みであること
 npm run build
-git add dist
-git commit -m "Build dist"
+git add docs
+git commit -m "Build docs"
 git push
 ```
 
-`gh-pages` ブランチ運用ではなく `main` ブランチの `dist/` を Pages 公開対象として使う。
+GitHub Pages の Source は **`main` ブランチ / `/docs` フォルダ** を指定。
 
 ## GAS セットアップ手順
 
