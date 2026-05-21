@@ -1,0 +1,10 @@
+node_modules/
+.playwright-mcp/
+*.log
+gas/.clasp.json
+
+# Env (本番URLは .env.production にcommit、開発用 .env.local は除外)
+.env
+.env.local
+.env.development.local
+.env.production.local
