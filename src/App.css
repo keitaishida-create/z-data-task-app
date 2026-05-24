@@ -106,6 +106,64 @@ body {
   min-width: 0;
 }
 
+/* ---- Category form (vertical layout) ---- */
+.category-form-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--card-bg);
+  padding: 16px;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.category-form-vertical label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-light);
+}
+.category-form-vertical input[type="text"] {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  margin-top: 4px;
+  background: var(--card-bg);
+}
+.category-form-vertical input:focus {
+  outline: 2px solid var(--accent);
+  border-color: var(--accent);
+}
+.category-form-vertical .btn-primary {
+  align-self: flex-end;
+  padding: 10px 20px;
+}
+.label-hint {
+  font-weight: 400;
+  color: var(--text-light);
+  font-size: 11px;
+}
+
+/* ---- Category items (with assignees) ---- */
+.cat-item-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+.cat-minor-name {
+  font-size: 14px;
+}
+.cat-default-assignees {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
 .app-main {
   flex: 1;
   padding: 12px;

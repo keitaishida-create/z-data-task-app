@@ -5,6 +5,7 @@ import { useOffline } from './hooks/useOffline';
 import { LoginScreen } from './components/LoginScreen';
 import { TaskList } from './components/TaskList';
 import { TaskForm } from './components/TaskForm';
+import { CategoryManager } from './components/CategoryManager';
 import { OfflineBanner } from './components/OfflineBanner';
 import type { Task, ViewMode } from './types';
 import './App.css';
@@ -51,7 +52,7 @@ function MainApp({
 }: MainAppProps) {
   const {
     tasks, categories, statuses, pics, loading, error, reload,
-    addTask, updateTask,
+    addTask, updateTask, addCategory, deleteCategory,
   } = useTasks();
 
   const currentPic = getCurrentPic() || '';
@@ -127,6 +128,15 @@ function MainApp({
             defaultStatusFilter="all"
           />
         )}
+        {view === 'categories' && (
+          <CategoryManager
+            categories={categories}
+            pics={pics}
+            isOffline={isOffline}
+            onAdd={addCategory}
+            onDelete={deleteCategory}
+          />
+        )}
       </main>
 
       {view === 'tasks' && !isOffline && (
@@ -159,6 +169,13 @@ function MainApp({
         >
           <span className="nav-icon">✓</span>
           <span>アーカイブ</span>
+        </button>
+        <button
+          className={`nav-btn ${view === 'categories' ? 'active' : ''}`}
+          onClick={() => setView('categories')}
+        >
+          <span className="nav-icon">◫</span>
+          <span>カテゴリ</span>
         </button>
       </nav>
     </div>

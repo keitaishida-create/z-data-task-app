@@ -74,6 +74,32 @@ export function useTasks() {
     }
   }, []);
 
+  const handleAddCategory = useCallback(async (major: string, minor: string, defaultAssignees: string[]) => {
+    setLoading(true);
+    try {
+      const updated = await api.addCategory(major, minor, defaultAssignees);
+      setCategories(updated);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'カテゴリ追加に失敗しました');
+      throw e;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const handleDeleteCategory = useCallback(async (rowIndex: number) => {
+    setLoading(true);
+    try {
+      const updated = await api.deleteCategory(rowIndex);
+      setCategories(updated);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'カテゴリ削除に失敗しました');
+      throw e;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   return {
     tasks,
     categories,
@@ -85,5 +111,7 @@ export function useTasks() {
     addTask: handleAddTask,
     updateTask: handleUpdateTask,
     deleteTask: handleDeleteTask,
+    addCategory: handleAddCategory,
+    deleteCategory: handleDeleteCategory,
   };
 }

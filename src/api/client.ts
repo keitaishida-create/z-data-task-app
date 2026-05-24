@@ -120,7 +120,7 @@ export async function deleteTask(rowIndex: number): Promise<Task[]> {
   return tasks;
 }
 
-// ===== カテゴリ (read-only) =====
+// ===== カテゴリ =====
 
 export async function fetchCategories(): Promise<Category[]> {
   try {
@@ -134,6 +134,18 @@ export async function fetchCategories(): Promise<Category[]> {
     }
     throw e;
   }
+}
+
+export async function addCategory(majorCategory: string, minorCategory: string, defaultAssignees: string[]): Promise<Category[]> {
+  const cats = await apiCall<Category[]>('addCategory', { majorCategory, minorCategory, defaultAssignees });
+  cacheData(CACHE_KEY_CATEGORIES, cats);
+  return cats;
+}
+
+export async function deleteCategory(rowIndex: number): Promise<Category[]> {
+  const cats = await apiCall<Category[]>('deleteCategory', { rowIndex });
+  cacheData(CACHE_KEY_CATEGORIES, cats);
+  return cats;
 }
 
 // ===== ステータス =====

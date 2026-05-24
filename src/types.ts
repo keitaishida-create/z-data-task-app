@@ -15,7 +15,7 @@ export interface Category {
   defaultAssignees: string[];
 }
 
-export type ViewMode = 'tasks' | 'archive';
+export type ViewMode = 'tasks' | 'archive' | 'categories';
 
 export interface ApiResponse<T> {
   success: boolean;

@@ -103,6 +103,8 @@ function handleRequest(e) {
       case 'addTask':        return jsonResponse({ success: true, data: addTask(body) });
       case 'updateTask':     return jsonResponse({ success: true, data: updateTask(body) });
       case 'deleteTask':     return jsonResponse({ success: true, data: deleteTask(body) });
+      case 'addCategory':    return jsonResponse({ success: true, data: addCategory(body) });
+      case 'deleteCategory': return jsonResponse({ success: true, data: deleteCategory(body) });
       case 'changePassword': return jsonResponse({ success: true, data: changePassword(user, body) });
       default: return jsonResponse({ success: false, error: '不明なアクション: ' + action });
     }
@@ -168,10 +170,12 @@ function authenticate(token, pic) {
   if (!sheet) return null;
   const data = sheet.getDataRange().getValues();
   const now = new Date();
+  const nowTime = now.getTime();
   for (let i = 1; i < data.length; i++) {
     if (data[i][2] === pic && data[i][5] === token) {
       const expire = data[i][6];
-      if (expire instanceof Date && expire.getTime() > now.getTime()) {
+      const expireTime = expire instanceof Date ? expire.getTime() : new Date(expire).getTime();
+      if (!isNaN(expireTime) && expireTime > nowTime) {
         return { row: i + 1, id: data[i][0], name: data[i][1], pic: data[i][2] };
       }
       return null; // 期限切れ
@@ -275,6 +279,24 @@ function getCategories() {
     });
   }
   return categories;
+}
+
+function addCategory(body) {
+  const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(CATEGORY_SHEET);
+  sheet.appendRow([
+    body.majorCategory,
+    body.minorCategory,
+    serializeAssignees(body.defaultAssignees),
+  ]);
+  return getCategories();
+}
+
+function deleteCategory(body) {
+  const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(CATEGORY_SHEET);
+  const row = body.rowIndex;
+  if (!row || row < 2) throw new Error('無効な行番号');
+  sheet.deleteRow(row);
+  return getCategories();
 }
 
 // ============================================================
